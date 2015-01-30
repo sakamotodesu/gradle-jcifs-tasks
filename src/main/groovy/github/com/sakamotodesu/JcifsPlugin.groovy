@@ -6,6 +6,7 @@ import org.gradle.api.Project
 class JcifsPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
-        // TODO
+        //def task = project.tasks.create("jcifs", JcifsTask.class)
+
     }
 }

@@ -10,8 +10,14 @@ buildscript {
     }
 }
 
-apply plugin: 'github.com.sakamotodesu.jcifs'
+//apply plugin: 'github.com.sakamotodesu.jcifs'
 
 task test << {
-    assert plugins.hasPlugin('github.com.sakamotodesu.jcifs')
+//    assert plugins.hasPlugin('github.com.sakamotodesu.jcifs')
+
 }
+
+//task jcifs(type: github.com.sakamotodesu.JcifsTask) {
+
+//}
+

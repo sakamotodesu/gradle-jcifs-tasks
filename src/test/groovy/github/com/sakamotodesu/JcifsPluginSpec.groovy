@@ -16,6 +16,7 @@ class JcifsPluginSpec extends Specification {
 
         then:
         project.plugins.hasPlugin(JcifsPlugin)
+        //project.getTasks().findByPath("jcifs")
     }
 
 }
