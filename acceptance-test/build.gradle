@@ -6,12 +6,12 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.example:gradle-plugin-blank:$version"
+        classpath "github.com.sakamotodesu:jcifs:$version"
     }
 }
 
-apply plugin: 'com.example.hello'
+apply plugin: 'github.com.sakamotodesu.jcifs'
 
 task test << {
-    assert plugins.hasPlugin('com.example.hello')
+    assert plugins.hasPlugin('github.com.sakamotodesu.jcifs')
 }
