@@ -11,16 +11,16 @@ buildscript {
 }
 
 //apply plugin: 'github.com.sakamotodesu.jcifs'
-task jcifs(type: github.com.sakamotodesu.JcifsTask) {
-    from "C:\\Temp\\test.txt"
-    into "D:\\temp\\test.txt"
-}
+//task jcifs(type: github.com.sakamotodesu.JcifsTask) {
+//    from "C:\\Temp\\test.txt"
+//    into "D:\\temp\\test.txt"
+//}
 
 task test << {
 //    assert plugins.hasPlugin('github.com.sakamotodesu.jcifs')
 }
 
-test.dependsOn jcifs
+// test.dependsOn jcifs
 
 
 

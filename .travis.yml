@@ -2,11 +2,11 @@ language: java
 jdk: oraclejdk7
 
 install:
-- ./gradlew install --info
+- ./gradlew install --info --stacktrace
 
 script:
-- ./gradlew check
-- ./gradlew -p acceptance-test test
+- ./gradlew check --stacktrace
+- ./gradlew -p acceptance-test test --stacktrace
 
 after_success:
 - test ${TRAVIS_TAG} -a ${BINTRAY} && ./gradlew -Pversion=${TRAVIS_TAG#v} bintrayUpload
