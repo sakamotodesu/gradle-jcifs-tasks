@@ -25,8 +25,35 @@ class JcifsTaskTest extends Specification {
         task instanceof JcifsTask
     }
 
-    //@IgnoreIf({ !System.getProperty("os.name").toLowerCase().startsWith("windows") })
-    def "copy local to local"() {
+    def "copy local to local directory"() {
+        given:
+        def project = ProjectBuilder.builder().build()
+        def srcDir = new File(System.getProperty("java.io.tmpdir"), "srcDir")
+        prepareDir(srcDir)
+        def srcFile = new File(srcDir, "test.txt")
+        if (!srcFile.exists()) {
+            srcFile.createNewFile()
+        }
+        srcFile.write("bonjour")
+        def dstDir = new File(System.getProperty("java.io.tmpdir"), "dstDir")
+        prepareDir(dstDir)
+        def dstFile = new File(dstDir, "test.txt")
+        if (dstFile.exists() && !dstFile.delete()) {
+            throw new IOException("Failed to delete : " + dstFile)
+        }
+
+        when:
+        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+            from srcFile.getAbsolutePath()
+            into dstDir.getAbsolutePath()
+        })
+        task.execute()
+
+        then:
+        dstFile.exists()
+    }
+
+    def "copy local to local file"() {
         given:
         def project = ProjectBuilder.builder().build()
         def srcDir = new File(System.getProperty("java.io.tmpdir"), "srcDir")
@@ -51,7 +78,8 @@ class JcifsTaskTest extends Specification {
         task.execute()
 
         then:
-        dstFile.exists()
+        def e = thrown(TaskExecutionException)
+        e.getCause() instanceof InvalidUserDataException
     }
 
     def prepareDir(File dir) {
@@ -59,6 +87,7 @@ class JcifsTaskTest extends Specification {
             throw new IOException("Failed to mkdirs : " + dir)
         }
     }
+
 
     def "from is empty"() {
         given:

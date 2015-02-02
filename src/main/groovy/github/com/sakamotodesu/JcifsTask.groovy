@@ -32,28 +32,38 @@ class JcifsTask extends DefaultTask {
         if (from.startsWith("smb://") && into.startsWith("smb://")) {
             // remote to remote
             SmbFile srcSmbFile = new SmbFile(from)
-            SmbFile dstSmbFile = new SmbFile(into)
+            SmbFile dstSmbDir = new SmbFile(into)
+            if (!dstSmbDir.isDirectory()) {
+                throw new InvalidUserDataException(dstSmbDir.getPath() + " is not Directory")
+            }
+            SmbFile dstSmbFile = new SmbFile(dstSmbDir, srcSmbFile.getName())
             srcSmbFile.copyTo(dstSmbFile)
         } else if (from.startsWith("smb://") && !into.startsWith("smb://")) {
             //remote to local
             SmbFile srcSmbFile = new SmbFile(from)
-            File dstLocalFile = new File(into)
-            if (!dstLocalFile.exists()) {
-                dstLocalFile.createNewFile()
+            File dstLocalDir = new File(into)
+            if (!dstLocalDir.isDirectory()) {
+                throw new InvalidUserDataException(dstLocalDir.getPath() + " is not Directory")
             }
+            File dstLocalFile = new File(dstLocalDir, srcSmbFile.getName())
             copyFile(new BufferedInputStream(new SmbFileInputStream(srcSmbFile)), new BufferedOutputStream(new FileOutputStream(dstLocalFile)))
         } else if (!from.startsWith("smb://") && into.startsWith("smb://")) {
             // local to remote
             File srcLocalFile = new File(from)
-            SmbFile dstSmbFile = new SmbFile(into)
-            if (!dstSmbFile.exists()) {
-                dstSmbFile.createNewFile()
+            SmbFile dstSmbDir = new SmbFile(into)
+            if (!dstSmbDir.isDirectory()) {
+                throw new InvalidUserDataException(dstSmbDir.getPath() + " is not Directory")
             }
+            SmbFile dstSmbFile = new SmbFile(dstSmbDir,srcLocalFile.getName())
             copyFile(new BufferedInputStream(new FileInputStream(srcLocalFile)), new BufferedOutputStream(new SmbFileOutputStream(dstSmbFile)))
         } else {
             // local to local
             File srcLocalFile = new File(from)
-            File dstLocalFile = new File(into)
+            File dstLocalDir = new File(into)
+            if (!dstLocalDir.isDirectory()) {
+                throw new InvalidUserDataException(dstLocalDir.getPath() + " is not Directory")
+            }
+            File dstLocalFile = new File(dstLocalDir,srcLocalFile.getName())
             if (dstLocalFile.exists()) {
                 dstLocalFile.createNewFile()
             }
