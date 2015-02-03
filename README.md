@@ -6,6 +6,8 @@ copy a file on the cifs server
 
 ## How to use
 
+* Gradle 2.2.1 or later
+* JRE7 or later
 
 <pre>
 task copyCifs(type: github.com.sakamotodesu.jcifs) {
