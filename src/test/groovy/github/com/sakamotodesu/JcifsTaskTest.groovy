@@ -293,27 +293,6 @@ class JcifsTaskTest extends Specification {
         !dstZipFile.exists()
     }
 
-
-    def "copy cifs to local directory"() {
-        given:
-        def project = ProjectBuilder.builder().build()
-        def dstFile = new File("D:\\Temp\\test.txt")
-        if (dstFile.exists()) {
-            dstFile.delete()
-        }
-
-        when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
-            from "smb://172.28.2.158;hogehoge:hogefuga123@172.28.2.158/vol1/Audited/test.txt"
-            into dstFile.getParent()
-            lmCompatibility "2"
-        })
-        task.execute()
-
-        then:
-        dstFile.exists()
-    }
-
     def "from is empty"() {
         given:
         def project = ProjectBuilder.builder().build()
