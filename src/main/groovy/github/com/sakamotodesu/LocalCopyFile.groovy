@@ -69,4 +69,22 @@ class LocalCopyFile extends CopyFile {
     def exists() {
         return localFile.exists()
     }
+
+    /**
+     *
+     * @return {@inheritDoc}
+     */
+    @Override
+    List<CopyFile> getFileList() {
+        def copyFileList = new ArrayList()
+        if (localFile.isDirectory()) {
+            for (File file : localFile.listFiles()) {
+                copyFileList.add(new LocalCopyFile(localFile: file))
+            }
+        } else {
+            copyFileList.add(this)
+        }
+        return copyFileList
+    }
+
 }

@@ -13,8 +13,8 @@ class JcifsTask extends DefaultTask {
     String from
     String into
     String lmCompatibility = 3
-    String include = ""
-    String exclude = ""
+    String include
+    String exclude
 
     @TaskAction
     def jcifsCopy() {
@@ -26,13 +26,27 @@ class JcifsTask extends DefaultTask {
             throw new InvalidUserDataException("into is empty")
         }
 
-        def srcFile = CopyFileFactory.get(from)
-        def dstDir = CopyFileFactory.get(into)
-        if (!dstDir.isDirectory()) {
-            throw new InvalidUserDataException(dstDir.getPath() + " is not Directory")
+        def src = CopyFileFactory.get(from)
+        def dst = CopyFileFactory.get(into)
+        if (!dst.isDirectory()) {
+            throw new InvalidUserDataException(dst.getPath() + " is not Directory")
         }
-        def dstFile = CopyFileFactory.get(dstDir, srcFile.getName())
-        srcFile.copyTo(dstFile)
+        src.getFileList().findAll {
+            if (include == null || include.isEmpty()) {
+                true
+            } else {
+                it.getName().matches(include)
+            }
+        }.findAll {
+            if (exclude == null || exclude.isEmpty()) {
+                true
+            } else {
+                !it.getName().matches(exclude)
+            }
+        }.each {
+            def dstFile = CopyFileFactory.get(dst, it.getName())
+            it.copyTo(dstFile)
+        }
     }
 
 }

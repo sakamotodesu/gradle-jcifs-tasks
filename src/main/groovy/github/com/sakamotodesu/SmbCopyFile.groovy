@@ -73,4 +73,21 @@ class SmbCopyFile extends CopyFile {
     def exists() {
         return smbFile.exists()
     }
+
+    /**
+     *
+     * @return {@inheritDoc}
+     */
+    @Override
+    List<CopyFile> getFileList() {
+        def copyFileList = new ArrayList()
+        if (smbFile.isDirectory()) {
+            for (SmbFile file : smbFile.listFiles()) {
+                copyFileList.add(new SmbCopyFile(smbFile: file))
+            }
+        } else {
+            copyFileList.add(this)
+        }
+        return copyFileList
+    }
 }

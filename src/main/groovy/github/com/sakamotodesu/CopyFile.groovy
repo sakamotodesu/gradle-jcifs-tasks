@@ -66,4 +66,11 @@ abstract class CopyFile {
      * @return true: exists, false: not
      */
     abstract def exists()
+
+    /**
+     *
+     * @return {@link CopyFile} list
+     */
+    abstract List<CopyFile> getFileList()
+
 }
