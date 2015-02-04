@@ -8,7 +8,7 @@ import org.gradle.api.tasks.TaskAction
 /**
  * task for copying cifs file
  */
-class JcifsTask extends DefaultTask {
+class JcifsCopy extends DefaultTask {
 
     String from
     String into

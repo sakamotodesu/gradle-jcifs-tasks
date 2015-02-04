@@ -10,7 +10,19 @@ copy a file on the cifs server
 * JRE7 or later
 
 <pre>
-task copyCifs(type: github.com.sakamotodesu.jcifs) {
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "http://dl.bintray.com/sakamotodesu/maven"
+        }
+    }
+    dependencies {
+        classpath "github.com.sakamotodesu:gradle-jcifs-tasks:0.2"
+    }
+}
+
+task copyCifs(type: github.com.sakamotodesu.JcifsCopy) {
     from "C:\\work"
     into "smb://domain;username:password@server/share/directory/path"
 }
@@ -18,7 +30,7 @@ task copyCifs(type: github.com.sakamotodesu.jcifs) {
 
 
 <pre>
-task copyCifs(type: github.com.sakamotodesu.jcifs) {
+task copyCifs(type: github.com.sakamotodesu.JcifsCopy) {
     from "C:\\work"
     into "smb://domain;username:password@server/share/directory/path"
     include '.*\\.zip'
@@ -34,6 +46,7 @@ task copyCifs(type: github.com.sakamotodesu.jcifs) {
 
 - include/exclude change to glob
 - other properties
+- other tasks(delete/rename/etc)
 
 ## License
 

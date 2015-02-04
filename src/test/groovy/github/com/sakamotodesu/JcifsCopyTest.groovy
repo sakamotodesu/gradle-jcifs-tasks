@@ -8,21 +8,21 @@ import spock.lang.Specification
 /**
  * JcifsTaskTest
  */
-class JcifsTaskTest extends Specification {
+class JcifsCopyTest extends Specification {
 
     def "load the task"() {
         given:
         def project = ProjectBuilder.builder().build()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask)
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy)
         task.doLast({
             from "C:\\Temp\\test.txt"
             into "D:\\Temp"
         })
 
         then:
-        task instanceof JcifsTask
+        task instanceof JcifsCopy
     }
 
 
@@ -37,7 +37,7 @@ class JcifsTaskTest extends Specification {
 
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcFile.getAbsolutePath()
             into dstDir.getAbsolutePath()
         })
@@ -57,7 +57,7 @@ class JcifsTaskTest extends Specification {
         def dstFile = new File(dstDir, "test.txt")
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcFile.getAbsolutePath()
             into dstFile.getAbsolutePath()
         })
@@ -109,7 +109,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcTextFile.getAbsolutePath()
             into dstDir.getAbsolutePath()
             include '.*\\.txt$'
@@ -128,7 +128,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcTextFile.getAbsolutePath()
             into dstDir.getAbsolutePath()
             exclude '.*\\.txt$'
@@ -147,7 +147,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcTextFile.getAbsolutePath()
             into dstDir.getAbsolutePath()
             exclude '.*\\.gzip$'
@@ -166,7 +166,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcDir.getAbsolutePath()
             into dstDir.getAbsolutePath()
         })
@@ -184,7 +184,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcDir.getAbsolutePath()
             into dstDir.getAbsolutePath()
             include '.*\\.txt$'
@@ -203,7 +203,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcDir.getAbsolutePath()
             into dstDir.getAbsolutePath()
             include '.*\\.gzip$'
@@ -222,7 +222,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcDir.getAbsolutePath()
             into dstDir.getAbsolutePath()
             exclude '.*\\.txt$'
@@ -241,7 +241,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcDir.getAbsolutePath()
             into dstDir.getAbsolutePath()
             exclude '.*\\.gzip$'
@@ -260,7 +260,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcDir.getAbsolutePath()
             into dstDir.getAbsolutePath()
             include '.*\\.zip$'
@@ -280,7 +280,7 @@ class JcifsTaskTest extends Specification {
         setup()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from srcTextFile.getAbsolutePath()
             into dstDir.getAbsolutePath()
             include '.*\\.gzip$'
@@ -298,7 +298,7 @@ class JcifsTaskTest extends Specification {
         def project = ProjectBuilder.builder().build()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             into "C:\\Temp\\test.txt"
         })
         task.execute()
@@ -313,7 +313,7 @@ class JcifsTaskTest extends Specification {
         def project = ProjectBuilder.builder().build()
 
         when:
-        def task = project.task('github.com.sakamotodesu.jcifs', type: JcifsTask, {
+        def task = project.task('github.com.sakamotodesu.gradle-jcifs-tasks', type: JcifsCopy, {
             from "C:\\Temp\\test.txt"
         })
         task.execute()
