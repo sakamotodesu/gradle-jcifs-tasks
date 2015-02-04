@@ -34,3 +34,11 @@ task copyCifs(type: github.com.sakamotodesu.jcifs) {
 
 - include/exclude change to glob
 - other properties
+
+## License
+
+Apache License 2.0
+
+### Modification
+
+All of Groovy code has been modified from [gradle-blank-plugin](https://github.com/int128/gradle-plugin-blank).
