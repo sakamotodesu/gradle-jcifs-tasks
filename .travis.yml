@@ -1,16 +1,13 @@
 language: java
 jdk: oraclejdk7
-
 install:
-- ./gradlew install --info --stacktrace
-
+- "./gradlew install --info --stacktrace"
 script:
-- ./gradlew check --stacktrace
-- ./gradlew -p acceptance-test test --stacktrace
-
+- "./gradlew check --stacktrace"
+- "./gradlew -p acceptance-test test --stacktrace"
 after_success:
 - test ${TRAVIS_TAG} -a ${BINTRAY} && ./gradlew -Pversion=${TRAVIS_TAG#v} bintrayUpload
-
 env:
   global:
   - TERM=dumb
+  - secure: Os0dZtQhXc4ELstwHbvGpk8EFtKOXXC9doEF7BWrSdM4ysCBU4YLaOVupYHHDUA3KwRkRHk2WV4VSZfydnxfmyMli6veGfkY8D36IeWm7ULF233xQBZch1HuRlQtGWObSiCsfmmfxqQ+WsX/LK6nsgLekp3ibXJnC671MVoGqZ8=
