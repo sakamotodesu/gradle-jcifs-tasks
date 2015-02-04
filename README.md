@@ -2,7 +2,7 @@
 
 copy a file on the cifs server
 
-[![Build Status](https://travis-ci.org/sakamotodesu/jcifs.svg?branch=master)](https://travis-ci.org/sakamotodesu/jcifs)
+[![Build Status](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks.svg?branch=master)](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks)
 
 ## How to use
 
