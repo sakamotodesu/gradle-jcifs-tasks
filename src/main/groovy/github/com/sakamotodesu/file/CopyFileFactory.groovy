@@ -1,10 +1,10 @@
-package github.com.sakamotodesu
+package github.com.sakamotodesu.file
 
 import jcifs.smb.SmbFile
 import org.gradle.api.InvalidUserDataException
 
 /**
- * factory for {@link CopyFile}
+ * factory for {@link github.com.sakamotodesu.file.CopyFile}
  */
 class CopyFileFactory {
 

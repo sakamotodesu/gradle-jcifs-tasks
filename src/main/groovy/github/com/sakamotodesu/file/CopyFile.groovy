@@ -1,4 +1,4 @@
-package github.com.sakamotodesu
+package github.com.sakamotodesu.file
 /**
  * Abstract Copy File
  */

@@ -1,11 +1,15 @@
-package github.com.sakamotodesu
+package github.com.sakamotodesu.file
+
+import jcifs.smb.SmbFile
+import jcifs.smb.SmbFileInputStream
+import jcifs.smb.SmbFileOutputStream
 
 /**
- * a file on local server
+ * a file on cifs server
  */
-class LocalCopyFile extends CopyFile {
+class SmbCopyFile extends CopyFile {
 
-    File localFile
+    SmbFile smbFile
 
     /**
      *
@@ -13,7 +17,7 @@ class LocalCopyFile extends CopyFile {
      */
     @Override
     BufferedInputStream getBufferedInputStream() {
-        return new BufferedInputStream(new FileInputStream(localFile))
+        return new BufferedInputStream(new SmbFileInputStream(smbFile))
     }
 
     /**
@@ -22,7 +26,7 @@ class LocalCopyFile extends CopyFile {
      */
     @Override
     BufferedOutputStream getBufferedOutputStream() {
-        return new BufferedOutputStream(new FileOutputStream(localFile))
+        return new BufferedOutputStream(new SmbFileOutputStream(smbFile))
     }
 
     /**
@@ -31,16 +35,16 @@ class LocalCopyFile extends CopyFile {
      */
     @Override
     def isDirectory() {
-        return localFile.isDirectory()
+        return smbFile.isDirectory()
     }
+
     /**
      *
      * @return {@inheritDoc}
      */
-
     @Override
     def getPath() {
-        return localFile.getAbsolutePath()
+        return smbFile.getPath()
     }
 
     /**
@@ -49,7 +53,7 @@ class LocalCopyFile extends CopyFile {
      */
     @Override
     def getParent() {
-        return new LocalCopyFile(localFile: localFile.getParentFile())
+        return new SmbCopyFile(smbFile: new SmbFile(smbFile.getParent()))
     }
 
     /**
@@ -58,7 +62,7 @@ class LocalCopyFile extends CopyFile {
      */
     @Override
     def String getName() {
-        return localFile.getName()
+        return smbFile.getName()
     }
 
     /**
@@ -67,7 +71,7 @@ class LocalCopyFile extends CopyFile {
      */
     @Override
     def exists() {
-        return localFile.exists()
+        return smbFile.exists()
     }
 
     /**
@@ -77,14 +81,13 @@ class LocalCopyFile extends CopyFile {
     @Override
     List<CopyFile> getFileList() {
         def copyFileList = new ArrayList()
-        if (localFile.isDirectory()) {
-            for (File file : localFile.listFiles()) {
-                copyFileList.add(new LocalCopyFile(localFile: file))
+        if (smbFile.isDirectory()) {
+            for (SmbFile file : smbFile.listFiles()) {
+                copyFileList.add(new SmbCopyFile(smbFile: file))
             }
         } else {
             copyFileList.add(this)
         }
         return copyFileList
     }
-
 }

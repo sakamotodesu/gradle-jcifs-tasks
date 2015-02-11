@@ -1,5 +1,6 @@
 package github.com.sakamotodesu
 
+import github.com.sakamotodesu.file.CopyFileFactory
 import jcifs.Config
 import org.gradle.api.DefaultTask
 import org.gradle.api.InvalidUserDataException
