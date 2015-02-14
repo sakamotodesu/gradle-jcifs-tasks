@@ -90,4 +90,21 @@ class SmbCopyFile extends CopyFile {
         }
         return copyFileList
     }
+
+    /**
+     * mkdirs
+     */
+    @Override
+    void mkdirs() {
+        smbFile.mkdirs()
+    }
+
+    /**
+     *
+     * @return toString
+     */
+    @Override
+    String toString() {
+        return smbFile.toString()
+    }
 }

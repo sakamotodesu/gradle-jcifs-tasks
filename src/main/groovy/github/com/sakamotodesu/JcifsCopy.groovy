@@ -29,8 +29,9 @@ class JcifsCopy extends DefaultTask {
 
         def src = CopyFileFactory.get(from)
         def dst = CopyFileFactory.get(into)
-        if (!dst.isDirectory()) {
-            throw new InvalidUserDataException(dst.getPath() + " is not Directory")
+        println dst
+        if (!dst.exists()) {
+            dst.mkdirs()
         }
         src.getFileList().findAll {
             if (include == null || include.isEmpty()) {

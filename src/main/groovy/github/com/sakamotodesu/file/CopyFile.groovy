@@ -60,7 +60,8 @@ abstract class CopyFile {
      *
      * @return filename
      */
-    abstract def String getName()
+    abstract String getName()
+
     /**
      *
      * @return true: exists, false: not
@@ -72,5 +73,16 @@ abstract class CopyFile {
      * @return {@link CopyFile} list
      */
     abstract List<CopyFile> getFileList()
+
+    /**
+     * mkdirs
+     */
+    abstract void mkdirs()
+
+    /**
+     *
+     * @return toString
+     */
+    abstract String toString()
 
 }

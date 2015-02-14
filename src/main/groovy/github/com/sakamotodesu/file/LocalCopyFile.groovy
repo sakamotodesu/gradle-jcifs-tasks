@@ -86,4 +86,22 @@ class LocalCopyFile extends CopyFile {
         return copyFileList
     }
 
+    /**
+     * mkdirs
+     */
+    @Override
+    void mkdirs() {
+        if(!localFile.mkdirs()){
+            throw new IOException('Failed to mkdirs ' + localFile)
+        }
+    }
+
+    /**
+     *
+     * @return toString
+     */
+    @Override
+    String toString() {
+        return localFile.toString()
+    }
 }
