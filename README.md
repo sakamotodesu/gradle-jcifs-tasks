@@ -1,6 +1,6 @@
-# jCifs Task for Gradle
+# jCifs Tasks for Gradle
 
-copy a file on the cifs server
+- JcifsCopy : copy a file on the cifs server
 
 [![Build Status](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks.svg?branch=master)](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks)
 
@@ -18,7 +18,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "github.com.sakamotodesu:gradle-jcifs-tasks:0.2"
+        classpath "github.com.sakamotodesu:gradle-jcifs-tasks:0.2.1"
     }
 }
 
@@ -47,6 +47,7 @@ task copyCifs(type: github.com.sakamotodesu.JcifsCopy) {
 - include/exclude change to glob
 - other properties
 - other tasks(delete/rename/etc)
+- FileTree
 
 ## License
 
