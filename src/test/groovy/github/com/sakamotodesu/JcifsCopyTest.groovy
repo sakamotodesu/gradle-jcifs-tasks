@@ -47,6 +47,29 @@ class JcifsCopyTest extends Specification {
         dstFile.exists()
     }
 
+    def "copy local file to local nest directory"() {
+        given:
+        def project = ProjectBuilder.builder().build()
+        def srcDir = prepareDir("srcDir")
+        def srcFile = new File(srcDir, "test.txt")
+        srcFile.createNewFile()
+        def dstDir = prepareDir("dstDir/dstDir/dstDir")
+        def dstFile = new File(dstDir, "test.txt")
+
+
+        when:
+        def task = project.task('test', type: JcifsCopy, {
+            from srcFile.getAbsolutePath()
+            into dstDir.getAbsolutePath()
+        })
+        task.execute()
+
+        then:
+        dstFile.exists()
+    }
+    
+    
+
     def "copy local file to local file"() {
         given:
         def project = ProjectBuilder.builder().build()
