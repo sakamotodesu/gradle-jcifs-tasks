@@ -1,8 +1,14 @@
-# jCifs Tasks for Gradle
+# jCifs Gradle Plugin
+
+[![Build Status](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks.svg?branch=master)](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks)
+[ ![Download](https://api.bintray.com/packages/sakamotodesu/maven/gradle-jcifs-tasks/images/download.svg) ](https://bintray.com/sakamotodesu/maven/gradle-jcifs-tasks/_latestVersion)
+
+
+jCifs Gradle Plugin provides cifs access function.
 
 - JcifsCopy : copy a file on the cifs server
 
-[![Build Status](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks.svg?branch=master)](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks)
+
 
 ## How to use
 
