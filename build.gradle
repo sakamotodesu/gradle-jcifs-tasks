@@ -1,8 +1,20 @@
-plugins {
-    id 'groovy'
-    id 'maven-publish'
-    id 'com.jfrog.bintray' version '1.0'
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2"
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.1"
+    }
 }
+
+apply plugin: "com.gradle.plugin-publish"
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
 
 sourceCompatibility = JavaVersion.VERSION_1_6
 targetCompatibility = JavaVersion.VERSION_1_6
@@ -94,4 +106,18 @@ apply from: file('gradle/plugin-generator.gradle')
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.1'
+}
+
+pluginBundle {
+    website = 'https://github.com/sakamotodesu/gradle-jcifs-tasks'
+    vcsUrl = 'https://github.com/sakamotodesu/gradle-jcifs-tasks'
+    description = 'jCifs Gradle Plugin provides cifs access function.'
+    tags = ['samba', 'cifs','jcifs']
+    plugins {
+        jcifsPlugin {
+            id = "${project.property('gradle.plugin.id')}"
+            displayName = "${project.property('description')}"
+        }
+    }
+
 }
