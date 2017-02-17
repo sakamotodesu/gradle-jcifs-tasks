@@ -18,6 +18,7 @@ class JcifsCopy extends DefaultTask {
     String exclude
     String cleanBefore = null
     String cleanAfter = null
+    Boolean recursivaly = false
 
     @TaskAction
     def jcifsCopy() {
@@ -29,20 +30,29 @@ class JcifsCopy extends DefaultTask {
             throw new InvalidUserDataException("into is empty")
         }
 
-        def src = CopyFileFactory.get(from)
-        def dst = CopyFileFactory.get(into)
-
         if (cleanBefore != null) {
             def cleanBeforeDir = CopyFileFactory.get(cleanBefore)
             cleanBeforeDir.deleteDirectoryContents()
         }
+
+        copyRecursivaly('')
+
+        if (cleanAfter != null) {
+            def cleanAfterDir = CopyFileFactory.get(cleanAfter)
+            cleanAfterDir.deleteDirectoryContents()
+        }
+    }
+
+    def copyRecursivaly(subPath) {
+        def src = CopyFileFactory.get(from + subPath)
+        def dst = CopyFileFactory.get(into + subPath)
 
         if (!dst.exists()) {
             dst.mkdirs()
         }
 
         src.getFileList().findAll {
-            if (include == null || include.isEmpty()) {
+            if (include == null || include.isEmpty() || (it.isDirectory() && recursivaly)) {
                 true
             } else {
                 it.getName().matches(include)
@@ -54,14 +64,16 @@ class JcifsCopy extends DefaultTask {
                 !it.getName().matches(exclude)
             }
         }.each {
-            def dstFile = CopyFileFactory.get(dst, it.getName())
-            it.copyTo(dstFile)
-        }
-
-        if (cleanAfter != null) {
-            def cleanAfterDir = CopyFileFactory.get(cleanAfter)
-            cleanAfterDir.deleteDirectoryContents()
+            if (it.isDirectory()) {
+                if (recursivaly) {
+                    def sub = it.path.replaceFirst(from, '')
+                    copyRecursivaly(sub + '/')
+                }
+            } else {
+                def dstFile = CopyFileFactory.get(dst, it.name)
+                println it
+                it.copyTo(dstFile)
+            }
         }
     }
-
 }

@@ -3,10 +3,12 @@
 [![Build Status](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks.svg?branch=master)](https://travis-ci.org/sakamotodesu/gradle-jcifs-tasks)
 [ ![Download](https://api.bintray.com/packages/sakamotodesu/maven/gradle-jcifs-tasks/images/download.svg) ](https://bintray.com/sakamotodesu/maven/gradle-jcifs-tasks/_latestVersion)
 
+http://dl.bintray.com/bbranquinho/gradle-jcifs-tasks
 
 jCifs Gradle Plugin provides cifs access function.
 
 - JcifsCopy : copy a file on the cifs server
+- Support copying recursively
 
 
 
@@ -20,11 +22,11 @@ buildscript {
     repositories {
         jcenter()
         maven {
-            url "http://dl.bintray.com/sakamotodesu/maven"
+            url "http://dl.bintray.com/bbranquinho/gradle-jcifs-tasks"
         }
     }
     dependencies {
-        classpath "github.com.sakamotodesu:gradle-jcifs-tasks:0.2.1"
+        classpath "github.com.sakamotodesu:gradle-jcifs-tasks:v0.3.0"
     }
 }
 
@@ -42,6 +44,7 @@ task copyCifs(type: github.com.sakamotodesu.JcifsCopy) {
     include '.*\\.zip'
     exclude '.*\\.txt'
     lmCompatibility '2'
+    recursivaly true
 }
 </pre>
 
