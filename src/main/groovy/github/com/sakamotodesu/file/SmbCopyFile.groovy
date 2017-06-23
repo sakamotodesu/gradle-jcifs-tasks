@@ -92,6 +92,19 @@ class SmbCopyFile extends CopyFile {
     }
 
     /**
+     *
+     * @return {@inheritDoc}
+     */
+    @Override
+    def deleteDirectoryContents() {
+        if (smbFile.isDirectory()) {
+            for (SmbFile file : smbFile.listFiles()) {
+                file.delete()
+            }
+        }
+    }
+
+    /**
      * mkdirs
      */
     @Override

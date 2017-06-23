@@ -87,6 +87,19 @@ class LocalCopyFile extends CopyFile {
     }
 
     /**
+     *
+     * @return {@inheritDoc}
+     */
+    @Override
+    def deleteDirectoryContents() {
+        if (localFile.isDirectory()) {
+            for (File file : localFile.listFiles()) {
+                file.directory ? file.deleteDir() : file.delete()
+            }
+        }
+    }
+
+    /**
      * mkdirs
      */
     @Override

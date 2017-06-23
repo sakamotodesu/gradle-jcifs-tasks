@@ -75,6 +75,12 @@ abstract class CopyFile {
     abstract List<CopyFile> getFileList()
 
     /**
+     *
+     * @return delete all files from the directory
+     */
+    abstract def deleteDirectoryContents()
+
+    /**
      * mkdirs
      */
     abstract void mkdirs()

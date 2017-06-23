@@ -16,6 +16,8 @@ class JcifsCopy extends DefaultTask {
     String lmCompatibility = 3
     String include
     String exclude
+    String cleanBefore = null
+    String cleanAfter = null
 
     @TaskAction
     def jcifsCopy() {
@@ -29,10 +31,16 @@ class JcifsCopy extends DefaultTask {
 
         def src = CopyFileFactory.get(from)
         def dst = CopyFileFactory.get(into)
-        println dst
+
+        if (cleanBefore != null) {
+            def cleanBeforeDir = CopyFileFactory.get(cleanBefore)
+            cleanBeforeDir.deleteDirectoryContents()
+        }
+
         if (!dst.exists()) {
             dst.mkdirs()
         }
+
         src.getFileList().findAll {
             if (include == null || include.isEmpty()) {
                 true
@@ -48,6 +56,11 @@ class JcifsCopy extends DefaultTask {
         }.each {
             def dstFile = CopyFileFactory.get(dst, it.getName())
             it.copyTo(dstFile)
+        }
+
+        if (cleanAfter != null) {
+            def cleanAfterDir = CopyFileFactory.get(cleanAfter)
+            cleanAfterDir.deleteDirectoryContents()
         }
     }
 
