@@ -32,11 +32,11 @@ class LocalCopyFile extends CopyFile {
     def isDirectory() {
         return localFile.isDirectory()
     }
+    
     /**
      *
      * @return {@inheritDoc}
      */
-
     @Override
     def getPath() {
         return localFile.getAbsolutePath()
