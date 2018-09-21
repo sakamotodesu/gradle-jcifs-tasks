@@ -29,7 +29,6 @@ class JcifsCopy extends DefaultTask {
 
         def src = CopyFileFactory.get(from)
         def dst = CopyFileFactory.get(into)
-        println dst
         if (!dst.exists()) {
             dst.mkdirs()
         }
