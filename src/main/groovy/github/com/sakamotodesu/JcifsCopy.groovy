@@ -71,7 +71,6 @@ class JcifsCopy extends DefaultTask {
                 }
             } else {
                 def dstFile = CopyFileFactory.get(dst, it.name)
-                println it
                 it.copyTo(dstFile)
             }
         }
