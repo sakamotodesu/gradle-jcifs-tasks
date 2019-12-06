@@ -18,7 +18,7 @@ class JcifsCopy extends DefaultTask {
     String exclude
     String cleanBefore = null
     String cleanAfter = null
-    Boolean recursivaly = false
+    Boolean recursively = false
 
     @TaskAction
     def jcifsCopy() {
@@ -35,7 +35,7 @@ class JcifsCopy extends DefaultTask {
             cleanBeforeDir.deleteDirectoryContents()
         }
 
-        copyRecursivaly('')
+        copyRecursively('')
 
         if (cleanAfter != null) {
             def cleanAfterDir = CopyFileFactory.get(cleanAfter)
@@ -43,7 +43,7 @@ class JcifsCopy extends DefaultTask {
         }
     }
 
-    def copyRecursivaly(subPath) {
+    def copyRecursively(subPath) {
         def src = CopyFileFactory.get(from + subPath)
         def dst = CopyFileFactory.get(into + subPath)
 
@@ -52,7 +52,7 @@ class JcifsCopy extends DefaultTask {
         }
 
         src.getFileList().findAll {
-            if (include == null || include.isEmpty() || (it.isDirectory() && recursivaly)) {
+            if (include == null || include.isEmpty() || (it.isDirectory() && recursively)) {
                 true
             } else {
                 it.getName().matches(include)
@@ -65,9 +65,9 @@ class JcifsCopy extends DefaultTask {
             }
         }.each {
             if (it.isDirectory()) {
-                if (recursivaly) {
+                if (recursively) {
                     def sub = it.path.replaceFirst(from, '')
-                    copyRecursivaly(sub + '/')
+                    copyRecursively(sub + '/')
                 }
             } else {
                 def dstFile = CopyFileFactory.get(dst, it.name)
