@@ -32,11 +32,11 @@ class LocalCopyFile extends CopyFile {
     def isDirectory() {
         return localFile.isDirectory()
     }
+    
     /**
      *
      * @return {@inheritDoc}
      */
-
     @Override
     def getPath() {
         return localFile.getAbsolutePath()
@@ -84,6 +84,19 @@ class LocalCopyFile extends CopyFile {
             copyFileList.add(this)
         }
         return copyFileList
+    }
+
+    /**
+     *
+     * @return {@inheritDoc}
+     */
+    @Override
+    def deleteDirectoryContents() {
+        if (localFile.isDirectory()) {
+            for (File file : localFile.listFiles()) {
+                file.directory ? file.deleteDir() : file.delete()
+            }
+        }
     }
 
     /**

@@ -67,8 +67,6 @@ class JcifsCopyTest extends Specification {
         then:
         dstFile.exists()
     }
-    
-    
 
     def "copy local file to local file"() {
         given:
@@ -346,5 +344,44 @@ class JcifsCopyTest extends Specification {
         e.getCause() instanceof InvalidUserDataException
     }
 
+    def "empty dest dir before copy"() {
+        given:
+        def project = ProjectBuilder.builder().build()
+        setup()
+        def dstOldFile = new File(dstDir, "old.txt")
+        dstOldFile.createNewFile()
+        
+        when:
+        def task = project.task('test', type: JcifsCopy, {
+            from srcTextFile.getAbsolutePath()
+            into dstDir.getAbsolutePath()
+            cleanBefore dstDir.getAbsolutePath()
+        })
+        task.execute()
+        
+        then:
+        !dstOldFile.exists()
+        dstTextFile.exists()
+    }
+
+    def "empty src dir after copy"() {
+        given:
+        def project = ProjectBuilder.builder().build()
+        setup()
+
+        when:
+        def task = project.task('test', type: JcifsCopy, {
+            from srcTextFile.getAbsolutePath()
+            into dstDir.getAbsolutePath()
+            cleanAfter srcDir.getAbsolutePath()
+        })
+        task.execute()
+
+        then:
+        srcDir.exists()
+        !srcTextFile.exists()
+        !srcText2File.exists()
+        !srcZipFile.exists()
+    }
 
 }
