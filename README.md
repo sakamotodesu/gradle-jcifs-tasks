@@ -11,8 +11,8 @@ jCifs Gradle Plugin provides cifs access function.
 
 ## How to use
 
-* Gradle 2.2.1 or later
-* JRE8 or later
+* Gradle 5.0 or later
+* JDK11 or later
 
 <pre>
 buildscript {

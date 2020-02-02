@@ -41,7 +41,7 @@ class JcifsCopyTest extends Specification {
             from srcFile.getAbsolutePath()
             into dstDir.getAbsolutePath()
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         dstFile.exists()
@@ -62,7 +62,7 @@ class JcifsCopyTest extends Specification {
             from srcFile.getAbsolutePath()
             into dstDir.getAbsolutePath()
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         dstFile.exists()
@@ -82,7 +82,7 @@ class JcifsCopyTest extends Specification {
             from srcFile.getAbsolutePath()
             into dstFile.getAbsolutePath()
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         new File(dstFile.getAbsolutePath(),srcFile.getName()).exists()
@@ -135,7 +135,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             include '.*\\.txt$'
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         dstTextFile.exists()
@@ -154,7 +154,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             exclude '.*\\.txt$'
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         !dstTextFile.exists()
@@ -173,7 +173,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             exclude '.*\\.gzip$'
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         dstTextFile.exists()
@@ -191,7 +191,7 @@ class JcifsCopyTest extends Specification {
             from srcDir.getAbsolutePath()
             into dstDir.getAbsolutePath()
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         dstTextFile.exists()
@@ -210,7 +210,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             include '.*\\.txt$'
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         dstTextFile.exists()
@@ -229,7 +229,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             include '.*\\.gzip$'
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         !dstTextFile.exists()
@@ -248,7 +248,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             exclude '.*\\.txt$'
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         !dstTextFile.exists()
@@ -267,7 +267,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             exclude '.*\\.gzip$'
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         dstTextFile.exists()
@@ -287,7 +287,7 @@ class JcifsCopyTest extends Specification {
             include '.*\\.zip$'
             exclude '.*\\.txt$'
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         !dstTextFile.exists()
@@ -306,7 +306,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             include '.*\\.gzip$'
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         !dstTextFile.exists()
@@ -322,11 +322,10 @@ class JcifsCopyTest extends Specification {
         def task = project.task('test', type: JcifsCopy, {
             into "C:\\Temp\\test.txt"
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
-        def e = thrown(TaskExecutionException)
-        e.getCause() instanceof InvalidUserDataException
+        thrown(InvalidUserDataException)
     }
 
     def "into is empty"() {
@@ -337,11 +336,10 @@ class JcifsCopyTest extends Specification {
         def task = project.task('test', type: JcifsCopy, {
             from "C:\\Temp\\test.txt"
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
-        def e = thrown(TaskExecutionException)
-        e.getCause() instanceof InvalidUserDataException
+        thrown(InvalidUserDataException)
     }
 
     def "empty dest dir before copy"() {
@@ -357,7 +355,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             cleanBefore dstDir.getAbsolutePath()
         })
-        task.execute()
+        task.jcifsCopy()
         
         then:
         !dstOldFile.exists()
@@ -375,7 +373,7 @@ class JcifsCopyTest extends Specification {
             into dstDir.getAbsolutePath()
             cleanAfter srcDir.getAbsolutePath()
         })
-        task.execute()
+        task.jcifsCopy()
 
         then:
         srcDir.exists()
