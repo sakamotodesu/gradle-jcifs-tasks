@@ -16,6 +16,9 @@ class JcifsCopy extends DefaultTask {
     String lmCompatibility = 3
     String include
     String exclude
+    String cleanBefore = null
+    String cleanAfter = null
+    Boolean recursively = false
 
     @TaskAction
     def jcifsCopy() {
@@ -27,13 +30,29 @@ class JcifsCopy extends DefaultTask {
             throw new InvalidUserDataException("into is empty")
         }
 
-        def src = CopyFileFactory.get(from)
-        def dst = CopyFileFactory.get(into)
+        if (cleanBefore != null) {
+            def cleanBeforeDir = CopyFileFactory.get(cleanBefore)
+            cleanBeforeDir.deleteDirectoryContents()
+        }
+
+        copyRecursively('')
+
+        if (cleanAfter != null) {
+            def cleanAfterDir = CopyFileFactory.get(cleanAfter)
+            cleanAfterDir.deleteDirectoryContents()
+        }
+    }
+
+    def copyRecursively(subPath) {
+        def src = CopyFileFactory.get(from + subPath)
+        def dst = CopyFileFactory.get(into + subPath)
+
         if (!dst.exists()) {
             dst.mkdirs()
         }
+
         src.getFileList().findAll {
-            if (include == null || include.isEmpty()) {
+            if (include == null || include.isEmpty() || (it.isDirectory() && recursively)) {
                 true
             } else {
                 it.getName().matches(include)
@@ -45,8 +64,15 @@ class JcifsCopy extends DefaultTask {
                 !it.getName().matches(exclude)
             }
         }.each {
-            def dstFile = CopyFileFactory.get(dst, it.getName())
-            it.copyTo(dstFile)
+            if (it.isDirectory()) {
+                if (recursively) {
+                    def sub = it.path.replaceFirst(from, '')
+                    copyRecursively(sub + '/')
+                }
+            } else {
+                def dstFile = CopyFileFactory.get(dst, it.name)
+                it.copyTo(dstFile)
+            }
         }
     }
 
