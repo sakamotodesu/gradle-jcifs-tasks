@@ -10,11 +10,11 @@ buildscript {
     }
 }
 
-task test << {
-
+task test {
+    doLast {}
 }
 
-task testCopy(type:github.com.sakamotodesu.JcifsCopy){
+task testCopy(type: github.com.sakamotodesu.JcifsCopy) {
     from ""
     into ""
 }
